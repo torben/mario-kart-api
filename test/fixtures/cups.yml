@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  host_driver_id: 1
+  winning_driver_id: 1
+  motor_class: MyString
+  com: MyString
+  items: MyString
+  num_tracks: 1
+
+two:
+  host_driver_id: 1
+  winning_driver_id: 1
+  motor_class: MyString
+  com: MyString
+  items: MyString
+  num_tracks: 1

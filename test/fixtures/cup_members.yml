@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  cup_id: 1
+  driver_id: 1
+  placement: 1
+  points: 1
+
+two:
+  cup_id: 1
+  driver_id: 1
+  placement: 1
+  points: 1

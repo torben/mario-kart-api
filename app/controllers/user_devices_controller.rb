@@ -18,6 +18,6 @@ class UserDevicesController < ApplicationController
     end
 
     def user_device_params
-      params.require(:user_device).permit(:token, :os_version, :retina, :model, :open_count, :language)
+      params.require(:user_device).permit(:apn_token, :os_version, :retina, :model, :open_count, :language)
     end
 end

@@ -16,3 +16,7 @@
 /tmp
 
 config/database.yml
+
+config/certs/apn-cert-development.pem
+
+config/certs/apn-cert-production.pem

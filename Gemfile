@@ -31,6 +31,7 @@ gem 'devise'
 gem 'mini_magick'
 gem 'carrierwave'
 gem 'symbolize'
+gem 'kw_apn'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

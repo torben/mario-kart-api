@@ -1,0 +1,23 @@
+defaults: &defaults
+  cert_file: config/certs/apn-cert-development.pem
+  key_file: config/certs/apn-cert-development.pem
+  push_host: 'gateway.sandbox.push.apple.com'
+  push_port: 2195
+  feedback_host: 'feedback.sandbox.push.apple.com'
+  feedback_port: 2196
+
+development:
+  <<: *defaults
+
+#production: #development
+#  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+  push_host: 'gateway.push.apple.com'
+  feedback_host: 'feedback.push.apple.com'
+  cert_file: config/certs/apn-cert-production.pem
+  key_file: config/certs/apn-cert-production.pem

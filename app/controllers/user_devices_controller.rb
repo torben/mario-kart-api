@@ -9,6 +9,10 @@ class UserDevicesController < ApplicationController
   def update
     params[:user_device][:open_count] = (@user_device.open_count || 0) + 1
     @user_device.update_attributes(user_device_params)
+
+    if current_user.present?
+      @user_device.update_attribute(:user_id, current_user.id)
+    end
   end
 
   protected

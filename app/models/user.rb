@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :devices
+  has_many :user_devices
   has_many :cup_members
   has_many :cups, through: :cup_members
   has_many :characters, through: :cup_members

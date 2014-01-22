@@ -11,6 +11,7 @@ MarioKart::Application.routes.draw do
 
   resources :vehicles, only: :index
   resources :characters, only: :index
+  resources :user_devices
 
   resources :cups do
     resources :cup_members

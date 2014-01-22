@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131210140939) do
+ActiveRecord::Schema.define(version: 20140122105051) do
 
   create_table "characters", force: true do |t|
     t.string   "name"
@@ -44,14 +44,6 @@ ActiveRecord::Schema.define(version: 20131210140939) do
     t.datetime "updated_at"
   end
 
-  create_table "devices", force: true do |t|
-    t.integer  "user_id"
-    t.string   "uuid"
-    t.string   "apn_token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "drivers", force: true do |t|
     t.integer  "user_id"
     t.integer  "character_id"
@@ -62,6 +54,19 @@ ActiveRecord::Schema.define(version: 20131210140939) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "points_per_race"
+  end
+
+  create_table "user_devices", force: true do |t|
+    t.integer  "user_id"
+    t.string   "uuid"
+    t.string   "apn_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "os_version"
+    t.boolean  "retina"
+    t.string   "model"
+    t.integer  "open_count"
+    t.string   "language"
   end
 
   create_table "users", force: true do |t|
@@ -79,10 +84,10 @@ ActiveRecord::Schema.define(version: 20131210140939) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "win_count"
-    t.integer  "drive_count"
-    t.integer  "total_points"
-    t.integer  "points_per_race"
+    t.integer  "win_count",              default: 0
+    t.integer  "drive_count",            default: 0
+    t.integer  "total_points",           default: 0
+    t.integer  "points_per_race",        default: 0
     t.string   "avatar"
   end
 

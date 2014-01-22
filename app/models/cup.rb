@@ -13,7 +13,7 @@ class Cup < ActiveRecord::Base
     Rails.logger.info winning_user_id_changed?
     return unless winning_user_id_changed?
 
-    cup_members.where(state: :accepted).where('placement IS NOT NULL').each do |cup_member|
+    cup_members.where("points IS NOT NULL").each do |cup_member|
       user = cup_member.user
 
       user.win_count += 1 if user.id == winning_user_id

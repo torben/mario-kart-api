@@ -4,11 +4,11 @@ Send APNs
 ---------
 
 ```ruby
-device = UserDevice.where('token IS NOT NULL').first
+device = UserDevice.where('apn_token IS NOT NULL').first
 
 if device.present?
   payload = {:aps => {:alert => "Hey Boy! Let's roll...", :sound => 'annoying_beep'}}
-  apn = [KwAPN::Notification.create(device.token, payload)]
+  apn = [KwAPN::Notification.create(device.apn_token, payload)]
   status, ret = KwAPN::Sender.push(apn, 'TestSession')
 end
 ```

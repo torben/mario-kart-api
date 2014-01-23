@@ -1,7 +1,7 @@
 class CupMembersController < ApplicationController
   before_filter :authenticate_user!
   before_filter :set_cup
-  before_filter :set_cup_member, only: :update
+  before_filter :set_cup_member, only: [:update, :destroy]
 
   def create
     @cup_member = @cup.cup_members.create(cup_member_params)
@@ -9,6 +9,14 @@ class CupMembersController < ApplicationController
 
   def update
     @cup_member.update_attributes(cup_member_params)
+  end
+
+  def destroy
+    if @cup_member.destroy
+      head :ok
+    else
+      head :false
+    end
   end
 
   protected

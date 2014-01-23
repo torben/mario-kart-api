@@ -14,13 +14,14 @@ class CupMember < ActiveRecord::Base
 
   def send_apn
     tokens = user.user_devices.map(&:apn_token).uniq
+    cup_id = cup.id
     return if tokens.blank?
 
     Thread.new do
-      payload = {:aps => {:alert => "Los jetzt. Es gibt ein Rennen zu fahren.", :sound => 'annoying_beep'}}
+      payload = {:aps => {:alert => "Los jetzt. Es gibt ein Rennen zu fahren.", :sound => 'annoying_beep', cup_id: cup_id}}
       apn = []
       for token in tokens
-        apn.push KwAPN::Notification.create(token, payload)
+        apn.push KwAPN::Notification.create(token, payload) if token.present?
       end
       status, ret = KwAPN::Sender.push(apn, 'TestSession')
     end

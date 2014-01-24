@@ -26,8 +26,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def last_character
+    last_cup_member.try(:character)
+  end
+
   def last_character_id
-    last_cup_member.try(:character_id)
+    last_character.try(:id)
   end
 
   def last_vehicle_id

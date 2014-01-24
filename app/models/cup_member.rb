@@ -14,12 +14,19 @@ class CupMember < ActiveRecord::Base
 
   def send_apn
     return if user == cup.user
-    tokens = user.user_devices.map(&:apn_token).uniq
+    tokens = user.user_devices.map(&:apn_token).uniq.compact
     cup_id = cup.id
     return if tokens.blank?
 
+    sound = case user.last_character.try(:name)
+    when "Wario"
+      "sounds/mk64_wario06.wav"
+    else
+      "sounds/mk64_mario02.wav"
+    end
+
     Thread.new do
-      payload = {:aps => {:alert => "Los jetzt. Es gibt ein Rennen zu fahren.", :sound => 'annoying_beep', cup_id: cup_id}}
+      payload = {:aps => {:alert => "Los jetzt. Es gibt ein Rennen zu fahren.", :sound => sound, cup_id: cup_id}}
       apn = []
       for token in tokens
         apn.push KwAPN::Notification.create(token, payload) if token.present?

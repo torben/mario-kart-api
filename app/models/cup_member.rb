@@ -13,6 +13,7 @@ class CupMember < ActiveRecord::Base
   validates :state, presence: true
 
   def send_apn
+    return if user == cup.user
     tokens = user.user_devices.map(&:apn_token).uniq
     cup_id = cup.id
     return if tokens.blank?

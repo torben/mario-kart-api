@@ -22,7 +22,6 @@ class CupMembersController < ApplicationController
   protected
 
     def cup_member_params
-      Rails.logger.info "#{current_user.id} == #{@cup.user_id}"
       if current_user.id == @cup.user_id
         params.require(:cup_member).permit(:user_id, :vehicle_id, :character_id, :state, :placement, :points)
       else

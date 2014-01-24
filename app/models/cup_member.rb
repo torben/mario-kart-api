@@ -18,7 +18,7 @@ class CupMember < ActiveRecord::Base
     cup_id = cup.id
     return if tokens.blank?
 
-    sound = case user.last_character.try(:name)
+    sound = case cup.user.last_character.try(:name)
     when "Wario" then "sounds/mk64_wario06.wav"
     when "Bowser" then "sounds/bowser_5.wav"
     else

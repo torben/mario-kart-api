@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   end
 
   def last_character
-    last_cup_member.try(:character)
+    cup_members.where('character_id IS NOT NULL').order('created_at DESC').first.try(:character)
   end
 
   def last_character_id

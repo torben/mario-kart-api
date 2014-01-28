@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
   has_many :characters, through: :cup_members
   has_many :vehicles, through: :cup_members
 
+  belongs_to :last_character, class_name: "Character"
+  belongs_to :last_vehicle, class_name: "Vehicle"
+
   before_create :create_api_key
   before_save :set_points_per_race
 
@@ -26,19 +29,23 @@ class User < ActiveRecord::Base
     end
   end
 
-  def last_character
-    cup_members.where('character_id IS NOT NULL').order('created_at DESC').first.try(:character)
-  end
-
-  def last_character_id
-    last_character.try(:id)
-  end
-
-  def last_vehicle_id
-    last_cup_member.try(:vehicle_id)
-  end
-
   def last_cup_member
     @last_cup_member ||= cup_members.completed.order('created_at DESC').first
+  end
+
+  def image_data=(data)
+    io = CarrierStringIO.new(Base64.decode64(data))
+
+    self.avatar = io
+  end
+end
+
+class CarrierStringIO < StringIO
+  def original_filename
+    "photo_#{Time.now.to_i}.jpg"
+  end
+
+  def content_type
+    "image/jpeg"
   end
 end

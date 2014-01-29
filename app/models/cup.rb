@@ -10,7 +10,6 @@ class Cup < ActiveRecord::Base
   before_save :update_user_stats
 
   def update_user_stats
-    Rails.logger.info winning_user_id_changed?
     return unless winning_user_id_changed?
 
     cup_members.where("points IS NOT NULL").each do |cup_member|
@@ -21,5 +20,7 @@ class Cup < ActiveRecord::Base
       user.total_points += cup_member.points
       user.save
     end
+
+    cup_members.where("points IS NULL").delete_all
   end
 end

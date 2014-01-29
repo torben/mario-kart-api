@@ -6,6 +6,10 @@ json.com                cup.com
 json.items              cup.items
 json.num_tracks         cup.num_tracks
 
-json.cup_members(cup.cup_members) do |cup_member|
-  json.partial! 'shared/cup_member', cup_member: cup_member
+json.cup_members do
+  cup.cup_members.each do |cup_member|
+    if !defined?(only_with_points) || cup_member.points.present?
+      json.partial! 'shared/cup_member', cup_member: cup_member
+    end
+  end
 end

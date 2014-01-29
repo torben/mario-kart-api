@@ -6,10 +6,13 @@ json.com                cup.com
 json.items              cup.items
 json.num_tracks         cup.num_tracks
 
-json.cup_members do
-  cup.cup_members.each do |cup_member|
-    if !defined?(only_with_points) || cup_member.points.present?
-      json.partial! 'shared/cup_member', cup_member: cup_member
-    end
-  end
+# don't like, but needed
+cup_members = if defined?(only_with_points)
+  cup.cup_members.where('points IS NOT NULL')
+else
+  cup.cup_members
+end
+
+json.cup_members(cup_members) do |cup_member|
+  json.partial! 'shared/cup_member', cup_member: cup_member
 end

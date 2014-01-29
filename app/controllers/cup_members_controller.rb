@@ -4,9 +4,10 @@ class CupMembersController < ApplicationController
   before_filter :set_cup_member, only: [:update, :destroy]
 
   def create
+    user = User.where({id: params[:cup_member][:user_id]})
     @cup_member = @cup.cup_members.new(cup_member_params)
-    @cup_member.character_id = current_user.try(:last_character_id) if @cup_member.character_id.blank?
-    @cup_member.vehicle_id = current_user.try(:vehicle_id) if @cup_member.vehicle_id.blank?
+    @cup_member.character_id = user.try(:last_character_id) if @cup_member.character_id.blank?
+    @cup_member.vehicle_id = user.try(:last_vehicle_id) if @cup_member.vehicle_id.blank?
 
     @cup_member.save
   end

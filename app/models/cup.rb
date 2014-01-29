@@ -12,7 +12,7 @@ class Cup < ActiveRecord::Base
   def update_user_stats
     return unless winning_user_id_changed?
 
-    cup_members.where("points IS NOT NULL").order(:points).each_with_index do |cup_member, i|
+    cup_members.where("points IS NOT NULL").order('points DESC').each_with_index do |cup_member, i|
       user = cup_member.user
 
       user.win_count += 1 if user.id == winning_user_id

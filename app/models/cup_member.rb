@@ -47,7 +47,7 @@ class CupMember < ActiveRecord::Base
     return if tokens.blank?
 
     Thread.new do
-      payload = {:aps => {cup_member_id: cup_id}}
+      payload = {:aps => {cup_member_id: cup_member_id}}
       apn = []
       for token in tokens
         apn.push KwAPN::Notification.create(token, payload) if token.present?

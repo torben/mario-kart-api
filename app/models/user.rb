@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
     if drive_count.blank? || drive_count == 0
       self.points_per_race = 0
     else
-      self.points_per_race = total_points / drive_count
+      self.points_per_race = (total_points.to_f / drive_count.to_f).round
     end
   end
 

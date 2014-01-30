@@ -1,7 +1,10 @@
 class CupMembersController < ApplicationController
   before_filter :authenticate_user!
   before_filter :set_cup
-  before_filter :set_cup_member, only: [:update, :destroy]
+  before_filter :set_cup_member, only: [:show, :update, :destroy]
+
+  def show
+  end
 
   def create
     user = User.where({id: params[:cup_member][:user_id]}).first

@@ -1,0 +1,1 @@
+json.partial! 'shared/cup_member', cup_member: @cup_member

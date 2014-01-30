@@ -4,7 +4,8 @@ class CupMember < ActiveRecord::Base
   belongs_to :vehicle
   belongs_to :character
 
-  after_create :send_apn
+  after_create :send_new_cup_apn
+  after_update :send_new_state_apn
 
   scope :completed, -> { where('placement IS NOT NULL').where('vehicle_id IS NOT NULL').where('character_id IS NOT NULL') }
 
@@ -12,7 +13,7 @@ class CupMember < ActiveRecord::Base
 
   validates :state, presence: true
 
-  def send_apn
+  def send_new_cup_apn
     return if user == cup.user
     tokens = user.user_devices.map(&:apn_token).uniq.compact
     cup_id = cup.id
@@ -27,6 +28,26 @@ class CupMember < ActiveRecord::Base
 
     Thread.new do
       payload = {:aps => {:alert => "Los jetzt. Es gibt ein Rennen zu fahren.", :sound => sound, cup_id: cup_id}}
+      apn = []
+      for token in tokens
+        apn.push KwAPN::Notification.create(token, payload) if token.present?
+      end
+      status, ret = KwAPN::Sender.push(apn, 'TestSession')
+    end
+  end
+
+  def send_new_state_apn
+    tokens = []
+    cup.cup_members.each do |cup_member|
+      tokens.push cup_member.user.user_devices.map(&:apn_token)
+    end
+
+    tokens = tokens.uniq.compact
+    cup_member_id = id
+    return if tokens.blank?
+
+    Thread.new do
+      payload = {:aps => {cup_member_id: cup_id}}
       apn = []
       for token in tokens
         apn.push KwAPN::Notification.create(token, payload) if token.present?

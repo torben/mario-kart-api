@@ -42,7 +42,7 @@ class CupMember < ActiveRecord::Base
       tokens.push cup_member.user.user_devices.map(&:apn_token)
     end
 
-    tokens = tokens.uniq.compact
+    tokens = tokens.flatten.uniq.compact
     cup_member_id = id
     return if tokens.blank?
 

@@ -20,11 +20,7 @@ class CupMembersController < ApplicationController
   end
 
   def destroy
-    if @cup_member.destroy
-      head :ok
-    else
-      head :false
-    end
+    @cup_member.update_attribute(:state, :rejected)
   end
 
   protected
